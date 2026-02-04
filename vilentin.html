@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Question</title>
+
+<style>
+    body{
+        margin:0;
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+        font-family:Arial, Helvetica, sans-serif;
+        overflow:hidden;
+    }
+
+    #container{
+        text-align:center;
+    }
+
+    h1{
+        font-size:45px;
+        color:white;
+        text-shadow:2px 2px 5px rgba(0,0,0,0.3);
+    }
+
+    button{
+        padding:15px 30px;
+        font-size:22px;
+        border:none;
+        border-radius:10px;
+        margin:20px;
+        cursor:pointer;
+        transition:0.2s;
+    }
+
+    #yes{
+        background:#ff4d6d;
+        color:white;
+    }
+
+    #no{
+        background:#555;
+        color:white;
+        position:absolute;
+    }
+
+    .flower{
+        position:absolute;
+        font-size:30px;
+        animation:fall 4s linear infinite;
+    }
+
+    @keyframes fall{
+        from{ transform:translateY(-100px); }
+        to{ transform:translateY(110vh); }
+    }
+
+    #yay{
+        font-size:60px;
+        color:white;
+        position:absolute;
+        top:40%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        display:none;
+        text-shadow:3px 3px 8px rgba(0,0,0,0.4);
+    }
+</style>
+</head>
+
+<body>
+
+<div id="container">
+    <h1>Will you be my Valentine? 💖</h1>
+    <button id="yes">YES 😍</button>
+</div>
+
+<button id="no">NO 🙈</button>
+<div id="yay">YAAAY!!! 💕</div>
+
+<script>
+const noBtn = document.getElementById("no");
+
+// make NO button run away from mouse
+document.addEventListener("mousemove", (e)=>{
+    const rect = noBtn.getBoundingClientRect();
+    const distance = Math.hypot(
+        e.clientX - (rect.left + rect.width/2),
+        e.clientY - (rect.top + rect.height/2)
+    );
+
+    if(distance < 120){
+        const newX = Math.random() * (window.innerWidth - 100);
+        const newY = Math.random() * (window.innerHeight - 60);
+        noBtn.style.left = newX + "px";
+        noBtn.style.top = newY + "px";
+    }
+});
+
+// YES clicked → flowers + yay text
+document.getElementById("yes").onclick = ()=>{
+    document.getElementById("yay").style.display="block";
+
+    for(let i=0;i<60;i++){
+        let flower = document.createElement("div");
+        flower.className="flower";
+        flower.innerHTML="🌸";
+        flower.style.left = Math.random()*100+"vw";
+        flower.style.animationDuration = (2+Math.random()*3)+"s";
+        document.body.appendChild(flower);
+    }
+}
+</script>
+
+</body>
+</html>
